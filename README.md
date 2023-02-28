@@ -1,1 +1,1 @@
-# DChat-server
+# DCQChat-server
