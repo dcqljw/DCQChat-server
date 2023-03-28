@@ -1,8 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 api = Blueprint("api", __name__, url_prefix="/api")
 
 
-@api.route("/test")
-def test():
+@api.post("/upload")
+def upload():
     return "test"
