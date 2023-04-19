@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="message_list">
+    <h1></h1>
+</div>
+<div>
+    message:<input type="text" id="send" value="">
+    username:<input type="text" id="username" value="">
+    room:<input type="text" id="room">
+    <input type="button" id="join">join
+    <button id="send_message">send</button>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect("ws://127.0.0.1:8000/ws", {
+        transports: ['websocket'],
+        path: '/ws/socket.io'
+    });
+    socket.emit("join", {"data": "123123"})
+    socket.on('join', (data) => {
+        console.log(data)
+        document.getElementById("message_list").innerHTML += "<h1>" + data.username + data.message + "</h1>"
+    })
+    // $("#join").click(function () {
+    //     let text = $("#send").val()
+    //     const username = $("#username").val()
+    //     const room = $("#room").val()
+    //     console.log(username)
+    //     // socket.emit("message", {username, room, text})
+    //     socket.emit("join", {username, room})
+    // })
+    // $("#send_message").click(function () {
+    //     let text = $("#send").val()
+    //     const username = $("#username").val()
+    //     const room = $("#room").val()
+    //     console.log(username)
+    //     socket.emit("message", {username, room, text})
+    // })
+</script>
+</body>
+</html>

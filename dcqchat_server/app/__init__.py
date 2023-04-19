@@ -1,12 +1,23 @@
-from flask import Flask
-from flask_socketio import SocketIO
+from fastapi import FastAPI
+from fastapi_socketio import SocketManager
 
-socketio = SocketIO()
+from models import usermodel
+from sql.database import SessionLocal, engine
+
+usermodel.Base.metadata.create_all(bind=engine)
+app = FastAPI()
+socket_manager = SocketManager(app, mount_location="/ws")
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 def create_app():
-    app = Flask(__name__)
-    socketio.init_app(app, cors_allowed_origins='*')
-    from app.message.views import chat_bp
-    app.register_blueprint(chat_bp)
+    from app.message import api
+    app.include_router(api.router)
     return app
