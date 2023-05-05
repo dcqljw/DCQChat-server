@@ -1,14 +1,10 @@
-import loguru
 from fastapi import APIRouter, Depends
-from loguru import logger
 from sqlalchemy.orm import Session
-
+from uvicorn.server import logger
 from app import socket_manager, get_db
 from cruds import usercrud
 from schemas import userschemas
 
-logger.add("test.log")
-loguru
 router = APIRouter()
 
 
@@ -27,5 +23,5 @@ def test(user_id: int):
 
 @router.post('/create')
 def create(user: userschemas.UserCreate, db: Session = Depends(get_db)):
-    logger.info("msg")
+    logger.error("123")
     return usercrud.create_user(db=db, user=user)
