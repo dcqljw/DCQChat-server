@@ -18,6 +18,8 @@ def get_db():
 
 
 def create_app():
-    from app.message import api
-    app.include_router(api.router)
+    from app.message import api as mes_api
+    from app.TravelPlanApi import api as tp_api
+    app.include_router(mes_api.router, prefix="/message")
+    app.include_router(tp_api.router, prefix="/tp")
     return app
